@@ -1,20 +1,32 @@
 * {
     padding: 1px;
+    text-align: center;
 }
 header {
     background-color: lightgreen;
     color: black;
-    text-align: center;
 }
-.rightPanel {
+button {
+    padding: 12px;
+    margin: auto;
+    display: block;
+    width: 80%;
+}
+br {
+    border: 10px;
+}
+p {
+    text-align: left;
+}
+.leftPanel {
     align-content: left;
-    background: green;
+    background: lightgreen;
 }
 .topPanel {
-    background: blue;
+    background: lightblue;
 }
 .bottomPanel {
-    background: red;
+    background: lightcoral
 }
 aside {
     float: left;
