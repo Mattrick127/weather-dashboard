@@ -11,17 +11,23 @@
     <header>
         <h1>Welcome to my Weather Dashboard!</h1>
     </header>
-    <main>
-        <aside class="leftPanel">
-            <h2>Search for a City</h2>
-            <input name="city" id="city" type="text" autofocus="true">
-            <br>
-            <button>San Antonio</button>
-            <button>Austin</button>
-            <button>Houston</button>
-            <button>Dallas</button>
-            <button>Corpus Christi</button>
-        </aside>
+    <main class="flex-row justify-space-between">
+        <div class="col-12 col-md-4">
+            <div class="card">
+                <h3 class="card-header text-uppercase">Search by City</h3>
+                <form id="weather-form" class="card-body">
+                    <label class="form-label" for="city">City</label>
+                    <input name="city" id="city" type="text" autofocus="true" class="form-input" />
+                    <button type="submit" class="btn">Get Weather</button>
+                    <br>
+                    <h2>Examples:</h2>
+                    <button>San Antonio</button>
+                    <button>Austin</button>
+                    <button>Houston</button>
+                    <button>Corpus Christi</button>
+                </form>
+            </div>
+        </div>
         <section class="topPanel">
             <h2>Current City:</h2>
             <p>Temperature:</p>
@@ -32,7 +38,6 @@
         <section class="bottomPanel">
             <h2>5-Day Forecast</h2>
             <div class="card">
-                YARHARRRR!
             </div>
         </section>
     </main>

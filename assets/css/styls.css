@@ -9,18 +9,16 @@ header {
 button {
     padding: 12px;
     margin: auto;
-    display: block;
-    width: 80%;
 }
 br {
     border: 10px;
 }
 p {
+    margin: 20px;
     text-align: left;
 }
-.leftPanel {
-    align-content: left;
-    background: lightgreen;
+input {
+    display: inline-block;
 }
 .topPanel {
     background: lightblue;
@@ -32,5 +30,7 @@ aside {
     float: left;
     width: 20%;
     height: 100%;
-    
+}
+.card {
+    margin: 0 0 20px 0;
 }
