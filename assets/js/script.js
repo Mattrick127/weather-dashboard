@@ -32,7 +32,7 @@ getWeatherReport();
 
 
 var getForecastReport = function(forecast) {
-    var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=London,uk&callback=test&appid=44fd4a683d34b7393e0bfa504d69c463";
+    var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=London,us&appid=44fd4a683d34b7393e0bfa504d69c463";
 
     console.log("third function was called")
     fetch(forecastUrl).then(function(thirdResponse) {
