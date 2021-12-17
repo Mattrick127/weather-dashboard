@@ -1,47 +1,68 @@
-var getCityReport = function(city) {
-    var cityUrl = "https://api.openweathermap.org/data/2.5/weather?q=San-Antonio&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463";
+"use strict";
 
-    console.log("function was called")
-    fetch(cityUrl).then(function(firstResponse) {
-        firstResponse.json().then(function(firstData) {
-            console.log(firstData);
-        })
-    })
+const btnContainer = document.querySelector(".btn-container");
+const btnWeather = document.querySelector(".btn-weather");
+let input;
+let temp;
+let windSpeed;
+let humidity;
+
+const getCity = function (city) {
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463`)
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data);
+        const temp = data.main.temp;
+        console.log(`The current temperature in ${city}, is ${temp}`);
+        const windSpeed = data.wind.speed;
+        console.log(`The current wind speed in ${city}, is ${windSpeed}`);
+        const humidity = data.main.humidity;
+        console.log(`The current humidity in ${city}, is ${humidity}`);
+    });
+};
+// var getWeatherReport = function(weather) {
+//     var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=29.4241&lon=-98.4936&exclude=hourly&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463";
+
+//     console.log("second function was called")
+//     fetch(weatherUrl).then(function(secondResponse) {
+//         secondResponse.json().then(function(secondData) {
+//             console.log(secondData);
+//         })
+//     })
+// };
+const getClick = function (e) {
+    e.preventDefault();
+    const click = e.target.id;
+    console.log(click);
+    getCity(click);
+};
+btnContainer.addEventListener("click", getClick);
+
+
+const clearString = function () {
+    document.getElementById("city").value = "";
 };
 
-
-
-
-
-/// other api
-var getWeatherReport = function(weather) {
-    var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=29.4241&lon=-98.4936&exclude=hourly,daily&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463";
-
-    console.log("second function was called")
-    fetch(weatherUrl).then(function(secondResponse) {
-        secondResponse.json().then(function(secondData) {
-            console.log(secondData);
-        })
-    })
+const cityString = function (e) {
+    e.preventDefault();
+    input = document.getElementById("city").value
+    console.log(input);
+    getCity(input);
+    clearString();
 };
-var getForecastReport = function(forecast) {
-    var forecastUrl = "https://api.openweathermap.org/data/2.5/forecast?q=San-Antonio,us&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463";
 
-    console.log("third function was called")
-    fetch(forecastUrl).then(function(thirdResponse) {
-        thirdResponse.json().then(function(thirdData) {
-            console.log(thirdData);
-        })
-    })
+const enterKeyPressed = function (e) {
+    if (e.keyCode == 13) {
+        e.preventDefault();
+        cityString();
+        console.log("enter hit");
+    }
 };
+
+// btnWeather.addEventListener
+
 /// call to city exmaple
-getCityReport();
+getCity('Austin');
 
-
-/// call to weather example
-getWeatherReport();
-
-
-
-/// call to get forecast example
-getForecastReport();
+// /// call to weather example
+// getWeatherReport();
