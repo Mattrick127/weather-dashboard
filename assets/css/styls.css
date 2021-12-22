@@ -1,6 +1,7 @@
 * {
     padding: 1px;
     text-align: center;
+    box-sizing: border-box;
 }
 header {
     background-color: lightgreen;
@@ -21,16 +22,30 @@ input {
     display: inline-block;
 }
 .topPanel {
+    padding: 40px;
     background: lightblue;
+    display: inline-flex;
 }
 .bottomPanel {
-    background: lightcoral
+    background: lightcoral;
+    border-radius: 10px;
 }
 aside {
     float: left;
     width: 20%;
     height: 100%;
 }
-.card {
-    margin: 0 0 20px 0;
+/* Create four equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 20%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
