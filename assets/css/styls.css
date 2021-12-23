@@ -25,10 +25,12 @@ input {
     padding: 40px;
     background: lightblue;
     display: inline-flex;
+    border-radius: 10px;
 }
 .bottomPanel {
     background: lightcoral;
     border-radius: 10px;
+    height: 500px;
 }
 aside {
     float: left;

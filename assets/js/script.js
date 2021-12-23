@@ -1,5 +1,8 @@
 const btnContainer = document.querySelector(".btn-container");
 const btnWeather = document.querySelector(".btn-weather");
+
+
+
 let input;
 let temp;
 let windSpeed;
@@ -7,6 +10,7 @@ let humidity;
 let currentCity;
 let longitude;
 let latitude;
+let uvIndex;
 
 const getForecast = function (city) {
     fetch(
@@ -37,9 +41,22 @@ const getCity = function (city) {
       latitude = data.coord.lat;
         })
     .then(() => getForecast(currentCity))
+    .then(() => getWeather(currentCity))
     .then(() => populateFields());
 };
+// data.current.uvi
 
+const getWeather = function () {
+    fetch(
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463`
+    )
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      uvIndex = data.current.uvi;
+      console.log(`The current UV Index is ${uvIndex}`);
+    });
+};
 
 // var getWeatherReport = function(weather) {
 //     var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?" + latitude + "&" + longitude + "&exclude=hourly&units=imperial&appid=";
@@ -51,9 +68,9 @@ const getCity = function (city) {
 //         })
 //     })
 // };
+
+
 //gets id name from btns and runs get city
-
-
 const getClick = function (e) {
   e.preventDefault();
   const click = e.target.id;
@@ -95,6 +112,7 @@ const populateFields = function () {
   document.getElementById("currentCity").innerHTML = currentCity;
   document.getElementById("longitude").innerHTML = longitude;
   document.getElementById("latitude").innerHTML = latitude;
+  document.getElementById("uvIndex").innerHTML = uvIndex;
 };
 
 
