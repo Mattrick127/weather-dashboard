@@ -1,6 +1,8 @@
 const btnContainer = document.querySelector(".btn-container");
-const btnWeather = document.querySelector(".btn-weather");
-
+const forecastContainer = document.querySelector('.forecast');
+const clearBtn = document.querySelector('.clear');
+const myInput = document.getElementById('my-input')
+const myOtherButton = document.getElementById('my-other-button')
 
 
 let input;
@@ -11,14 +13,105 @@ let currentCity;
 let longitude;
 let latitude;
 let uvIndex;
+let oldContainer;
 
-const getForecast = function (city) {
+//used to dynamically set days
+const weekday = ['Sun', 'Mon', 'Tues', 'Wed', 'Thur', 'Fri', 'Sat'];
+
+
+const populateFields = function () {
+  document.getElementById("temp").innerHTML = temp;
+  document.getElementById("wind").innerHTML = windSpeed;
+  document.getElementById("humidity").innerHTML = humidity;
+  document.getElementById("currentCity").innerHTML = currentCity;
+  document.getElementById("longitude").innerHTML = longitude;
+  document.getElementById("latitude").innerHTML = latitude;
+  document.getElementById("uvIndex").innerHTML = uvIndex;
+};
+
+const clearFields = function () {
+  document.getElementById('currentCity').innerHTML = '';
+  document.getElementById('temp').innerHTML = 0;
+  document.getElementById('wind').innerHTML = 0;
+  document.getElementById('humidity').innerHTML = 0;
+  document.getElementById('uvIndex').innerHTML = 0;
+  document.getElementById("longitude").innerHTML = 0;
+  document.getElementById("latitude").innerHTML = 0;
+};
+
+// data.current.uvi
+
+const getWeather = function (lat, lng) {
+
     fetch(
-      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&exclude=hourly&appid=44fd4a683d34b7393e0bfa504d69c463`
+      `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=hourly&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463`
     )
     .then((response) => response.json())
-    .then((data) => console.log(data));
+    .then((data) => {
+      console.log(data);
+      temp = data.current.temp;
+      windSpeed = data.current.wind_speed;
+      humidity = data.current.humidity;
+      longitude = data.lon;
+      latitude = data.lat;
+      uvIndex = data.current.uvi;
+      const dailyArr = data.daily;
+      console.log(dailyArr);
+    getForecast(dailyArr);
+    populateFields();
+    });
 };
+
+
+const getForecast = function (arr) {
+
+  //only want the 5 day forecast
+  arr.splice(5, 3);
+
+  //uses new array
+  arr.map(el => {
+
+    //getting current day
+    const dt = el.dt;
+    const currentDay = new Date(dt * 1000);
+    const day = weekday[currentDay.getDay()];
+
+    //creating dynamic html template
+    const html = `
+    
+    <div class="weather-forecast" id="${'old'}">
+    <div class="weather-forecast-item">
+    <div class="city-state">${currentCity}</div>
+    
+    <div class="day">${day}</div>
+    <div class="img-container">
+    <img src="http://openweathermap.org/img/wn/${
+      el.weather[0].icon
+    }@2x.png" alt="weather icon" class="w-icon" />
+    </div>
+    <div class="temp">Night: ${el.temp.night}</div>
+    <div class="temp">Day: ${el.temp.day}</div>
+    <div class="wind">Wind Speed: ${el.wind_speed} mph</div>
+    <div class="humidity">Humidity: ${el.humidity}</div>
+    <div class="uv">UV Index: ${el.uvi}</div>
+    </div>
+    `;
+
+    //appending to DOM
+    forecastContainer.insertAdjacentHTML('beforeend', html);
+    oldContainer = document.querySelectorAll('#old');
+    console.log(oldContainer);
+  });
+};
+
+
+const clearContainer = function () {
+  clearFields();
+  oldContainer.forEach(el => {
+    el.remove();
+  });
+};
+clearBtn.addEventListener('click', clearContainer);
 
 
 const getCity = function (city) {
@@ -30,52 +123,25 @@ const getCity = function (city) {
     .then((data) => {
       console.log(data);
       currentCity = data.name;
-      console.log(`The current city is ${currentCity}`);
-      temp = data.main.temp;
-      console.log(`The current temperature in ${city}, is ${temp}`);
-      windSpeed = data.wind.speed;
-      console.log(`The current wind speed in ${city}, is ${windSpeed}`);
-      humidity = data.main.humidity;
-      console.log(`The current humidity in ${city}, is ${humidity}`);
-      longitude = data.coord.lon;
-      latitude = data.coord.lat;
+      lng = data.coord.lon;
+      lat = data.coord.lat;
         })
-    .then(() => getForecast(currentCity))
-    .then(() => getWeather(currentCity))
+    .then(() => getWeather(lat, lng))
     .then(() => populateFields());
 };
-// data.current.uvi
-
-const getWeather = function () {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/onecall?lat=${latitude}&lon=${longitude}&exclude=hourly&units=imperial&appid=44fd4a683d34b7393e0bfa504d69c463`
-    )
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      uvIndex = data.current.uvi;
-      console.log(`The current UV Index is ${uvIndex}`);
-    });
-};
-
-// var getWeatherReport = function(weather) {
-//     var weatherUrl = "https://api.openweathermap.org/data/2.5/onecall?" + latitude + "&" + longitude + "&exclude=hourly&units=imperial&appid=";
-
-//     console.log("second function was called")
-//     fetch(weatherUrl).then(function(secondResponse) {
-//         secondResponse.json().then(function(secondData) {
-//             console.log(secondData);
-//         })
-//     })
-// };
 
 
 //gets id name from btns and runs get city
 const getClick = function (e) {
   e.preventDefault();
   const click = e.target.id;
-  console.log(click);
   getCity(click);
+  
+  const myInputValue = e.target.id;
+  
+  myOtherButton.style.display = 'block'
+  
+  myOtherButton.innerHTML = myInputValue
 };
 btnContainer.addEventListener("click", getClick);
 
@@ -89,8 +155,10 @@ const cityString = function (e) {
   e.preventDefault();
   input = document.getElementById("city").value;
   console.log(input);
+  clearContainer();
   getCity(input);
   clearString();
+  
 };
 
 //Run city string on enter basesd on input
@@ -101,25 +169,3 @@ const enterKeyPressed = function (e) {
     console.log("enter hit");
   }
 };
-
-
-
-
-const populateFields = function () {
-  document.getElementById("temp").innerHTML = temp;
-  document.getElementById("wind").innerHTML = windSpeed;
-  document.getElementById("humidity").innerHTML = humidity;
-  document.getElementById("currentCity").innerHTML = currentCity;
-  document.getElementById("longitude").innerHTML = longitude;
-  document.getElementById("latitude").innerHTML = latitude;
-  document.getElementById("uvIndex").innerHTML = uvIndex;
-};
-
-
-// getWeatherReport();
-
-
-
-
-
-btnWeather.addEventListener("click", cityString);

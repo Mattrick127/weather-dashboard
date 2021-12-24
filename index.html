@@ -21,6 +21,9 @@
                     <input name="city" id="city" type="text" autofocus="true" class="form-input" />
                     <button type="submit" class="btn-weather">Get Weather</button>
                     <br>
+                    <h2>History:</h2>
+                    <button id="my-other-button"></button>
+                    <br>
                     <h2>Examples:</h2>
                     <div class="btn-container">
                         <button id="san antonio">San Antonio</button>
@@ -32,6 +35,7 @@
             </div>
         </div>
         <section class="topPanel">
+            <button class="clear">Clear</button>
             <h2>Current City:</h2>
             <p id="currentCity"></p>
             <h3>Temperature:</h3>
@@ -45,76 +49,9 @@
             <h3>Latitude</h3>
             <p id="latitude">0</p>
             <h3>UV Index:</h3>
-            <p id="uvIndex">0</p>
+            <p id="uvIndex" class="favorable">0</p>
         </section>
-        <section class="bottomPanel">
-                <h2>5-Day Forecast</h2><h1>(If you check this app daily at Noon.)</h1>
-                <div class="row">
-                    <div class="column">
-                    <img src="" alt="weather-icon">
-                    <h3>Date:</h2>
-                    <p id="date"></p>
-                    <h4>Temperature:</h3>
-                    <p id="temp">0</p>
-                    <h4>Wind:</h3>
-                    <p id="wind">0</p>
-                    <h4>Humidity:</h3>
-                    <p id="humidity">0</p>
-                    </div>
-                    <div class="column">
-                    <img src="" alt="weather-icon">
-                    <h3>Date:</h2>
-                    <p id="date"></p>
-                    <h4>Temperature:</h3>
-                    <p id="temp">0</p>
-                    <h4>Wind:</h3>
-                    <p id="wind">0</p>
-                    <h4>Humidity:</h3>
-                    <p id="humidity">0</p>
-
-
-                    </div>
-                    <div class="column">
-                    <img src="" alt="weather-icon">
-                    <h3>Date:</h2>
-                    <p id="date"></p>
-                    <h4>Temperature:</h3>
-                    <p id="temp">0</p>
-                    <h4>Wind:</h3>
-                    <p id="wind">0</p>
-                    <h4>Humidity:</h3>
-                    <p id="humidity">0</p>
-
-
-                    </div>
-                    <div class="column">
-                    <img src="" alt="weather-icon">
-                    <h3>Date:</h2>
-                    <p id="date"></p>
-                    <h4>Temperature:</h3>
-                    <p id="temp">0</p>
-                    <h4>Wind:</h3>
-                    <p id="wind">0</p>
-                    <h4>Humidity:</h3>
-                    <p id="humidity">0</p>
-
-
-                    </div>
-                    <div class="column">
-                    <img src="" alt="weather-icon">
-                    <h3>Date:</h2>
-                    <p id="date"></p>
-                    <h4>Temperature:</h3>
-                    <p id="temp">0</p>
-                    <h4>Wind:</h3>
-                    <p id="wind">0</p>
-                    <h4>Humidity:</h3>
-                    <p id="humidity">0</p>
-
-                        
-                    </div>
-                </div>
-        </section>
+        <section class="forecast"></section>
     </main>
 </body>
 </html>

@@ -51,3 +51,12 @@ aside {
   display: table;
   clear: both;
 }
+.favorable{
+    background-color: lightgreen;
+}
+.moderate{
+    background-color: orange
+}
+.severe{
+    background-color: red;
+}
