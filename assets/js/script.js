@@ -1,4 +1,5 @@
 const btnContainer = document.querySelector(".btn-container");
+const btnWeather = document.querySelector(".btn-weather");
 const forecastContainer = document.querySelector('.forecast');
 const clearBtn = document.querySelector('.clear');
 const myInput = document.getElementById('my-input')
@@ -55,6 +56,15 @@ const getWeather = function (lat, lng) {
       longitude = data.lon;
       latitude = data.lat;
       uvIndex = data.current.uvi;
+      document.querySelector("#uvIndex").className = "";
+      if (uvIndex < 3) {
+        document.querySelector("#uvIndex").classList.add("favorable")
+      } else if (uvIndex < 6) {
+        document.querySelector("#uvIndex").classList.add("moderate")
+      } else {
+        document.querySelector("#uvIndex").classList.add("severe");
+      }
+
       const dailyArr = data.daily;
       console.log(dailyArr);
     getForecast(dailyArr);
@@ -134,16 +144,18 @@ const getCity = function (city) {
 //gets id name from btns and runs get city
 const getClick = function (e) {
   e.preventDefault();
-  const click = e.target.id;
+  const click = document.getElementById("city").value;
+  console.log(click)
   getCity(click);
   
-  const myInputValue = e.target.id;
+  const myInputValue = e.target.value;
   
   myOtherButton.style.display = 'block'
   
   myOtherButton.innerHTML = myInputValue
 };
 btnContainer.addEventListener("click", getClick);
+btnWeather.addEventListener("click", getClick);
 
 //clears string in input
 const clearString = function () {
